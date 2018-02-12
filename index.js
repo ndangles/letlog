@@ -5,7 +5,7 @@ const colors = require('colors');
 const default_options = {
     separator: ":",
     case: "none",
-    function: "log",
+    function: "letlog",
     color: "white",
     bgColor: "bgBlack",
     style: "reset"
@@ -26,6 +26,7 @@ module.exports.log = (variable) => {
     }else{
       fs.readFile(filename, (err, contents) => {
         let variables = [];
+        let clean_variables = [];
         let regex = new RegExp("^" + default_options.function + "\((.*)\)$", "gm");
 
         variables = variables.concat(contents.toString().match(regex));
@@ -36,7 +37,13 @@ module.exports.log = (variable) => {
            variables = variables.concat(contents.toString().match(regex));
         }
 
-        if(values.varNames.length < variables.length){
+        for(varr of variables){
+          if(varr.indexOf("require(") == -1){
+            clean_variables.push(varr)
+          }
+        }
+
+        if(values.varNames.length < clean_variables.length){
           values.varNames.push({[variable]: values.varNames.length})
         }
         cache.set(filename, values, (err, success) => {
@@ -83,6 +90,7 @@ module.exports.options = (options) => {
 
 function printLabel(filename, variable) {
   let variables = [];
+  let clean_variables = [];
   colors.setTheme({
     custom: [default_options.color, default_options.bgColor, default_options.style]
   });
@@ -99,6 +107,12 @@ function printLabel(filename, variable) {
         variables = variables.concat(contents.toString().match(regex));
     }
 
+    for(varr of variables){
+      if(varr.indexOf("require(") == -1){
+        clean_variables.push(varr)
+      }
+    }
+
     cache.get( filename, ( err, cacheData ) => {
 
           let index;
@@ -112,13 +126,13 @@ function printLabel(filename, variable) {
           }
           switch(default_options.case){
             case 'upper':
-              console.log((variables[index].toString().replace(/\s/g, "").split('(')[1].split(')')[0].toUpperCase()+default_options.separator).custom+" "+variable);
+              console.log((clean_variables[index].toString().replace(/\s/g, "").split('(')[1].split(')')[0].toUpperCase()+default_options.separator).custom+" "+variable);
               break;
             case 'lower':
-              console.log((variables[index].toString().replace(/\s/g, "").split('(')[1].split(')')[0].toLowerCase()+default_options.separator).custom+" "+variable);
+              console.log((clean_variables[index].toString().replace(/\s/g, "").split('(')[1].split(')')[0].toLowerCase()+default_options.separator).custom+" "+variable);
               break;
             case 'none':
-              console.log((variables[index].toString().replace(/\s/g, "").split('(')[1].split(')')[0]+":").custom +" "+variable);
+              console.log((clean_variables[index].toString().replace(/\s/g, "").split('(')[1].split(')')[0]+":").custom +" "+variable);
               break;
 
           }
