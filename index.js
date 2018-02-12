@@ -129,14 +129,14 @@ function printLabel(filename, variable) {
 }
 
 function _getCallerFile() {
-    var originalFunc = Error.prepareStackTrace;
+    const originalFunc = Error.prepareStackTrace;
 
-    var callerfile;
+    let callerfile;
     try {
-        var err = new Error();
-        var currentfile;
+        const err = new Error();
+        let currentfile;
 
-        Error.prepareStackTrace = function (err, stack) { return stack; };
+        Error.prepareStackTrace =  (err, stack) => { return stack; };
 
         currentfile = err.stack.shift().getFileName();
 

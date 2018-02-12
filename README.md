@@ -3,7 +3,7 @@ Letlog
 
 Letlog is a flexible logging module that lets you simply log the variable itself while the module attaches a label of the variable name passed in to the console allowing for fast logging and identifying of variables in console output.
 <br><br>
-Letlog is also configurable, allowing you to change label size, color and formatting, making it easier to identify it in messy console output.
+Letlog is also configurable, allowing you to change label size, color and formatting, making it easier to identify variables in messy console output.
 
 
 
@@ -18,7 +18,7 @@ npm i letlog --save
 Usage
 -----
 
-letlog is a module that helps cut down on tedious console.log labeling when printing out simply variables. With this module you will be able to simply log the variable itself while the module attaches a label of the variable name for you.
+Letlog is a module that helps cut down on tedious console.log labeling when printing out simply variables. With this module you will be able to simply log the variable itself while the module attaches a label of the variable name for you.
 
 Configuration
 -------------
@@ -39,7 +39,7 @@ const default_options = {
 
 "separator" -> This is used to separate the label from the variable output. For example, using default options, the output of console.log(myVar) would be 'myVar: some data that was stored in myVar'.
 
-"case" -> This options is defaulted to none but also accepts the values of 'upper' and 'lower'. This changes the letter case of the variable label that is outputted. For example, if this option was set to 'upper' then console.log(myVar) would output 'MYVAR: some data'.
+"case" -> This option is defaulted to none but also accepts the values of 'upper' and 'lower'. This changes the letter case of the variable label that is outputted. For example, if this option was set to 'upper' then console.log(myVar) would output 'MYVAR: some data'.
 
 "function" -> This option should be configured to be the name of the function you are using to log variables. For example, const letlog = require('letlog').log; letlog(myVar). But if you were to change from the default to something like 'const log = require('letlog').log; log(myVar)' then function should be configured to 'log';
 
@@ -83,14 +83,14 @@ strikethrough
 
 Example #1 Custom Configuration Usage:
 ```js
-const options = {
+const custom_options = {
     separator: "->",
     case: "upper",
     style: "italic"
 } // options that are not set will be set to the defaults
 
 const letlog = require('letlog').log;
-require('letlog').options(options);
+require('letlog').options(custom_options);
 
 const price = 9.34;
 
@@ -99,13 +99,13 @@ letlog(price)
 
 Example #2 Custom Configuration Usage:
 ```js
-const options = {
+const custom_options = {
     bgColor: "bgBlue",
     function: "logger.log"
 } // options that are not set will be set to the defaults
 
 const logger = require('letlog')
-logger.options(options);
+logger.options(custom_options);
 
 const price = 9.34;
 
