@@ -8,6 +8,25 @@
   },
   "author": "Nicholas Dangles",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ndangles/letlog.git"
+  },
+  "keywords": [
+    "letlog",
+    "log variables",
+    "simple logging",
+    "variable logging",
+    "log variable names",
+    "logs",
+    "logging",
+    "variable logs"
+  ],
+  "bugs": {
+    "url": "https://github.com/ndangles/letlog/issues"
+  },
+  "readme": "README.md",
+  "homepage": "https://github.com/ndangles/letlog#readme",
   "dependencies": {
     "node-cache": "^4.1.1"
   }
