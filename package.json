@@ -1,0 +1,14 @@
+{
+  "name": "letlog",
+  "version": "1.0.0",
+  "description": "Log variables to console with label of variable name",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nicholas Dangles",
+  "license": "ISC",
+  "dependencies": {
+    "node-cache": "^4.1.1"
+  }
+}
