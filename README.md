@@ -57,41 +57,41 @@ const default_options = {
 "function" -> This option should be configured to be the name of the function you are using to log variables. For example, const letlog = require('letlog').log; letlog(myVar). But if you were to change from the default to something like 'const log = require('letlog').log; log(myVar)' then function should be configured to 'log';
 
 "color" -> This will change the text color of the label. The color options are as follows:
-black
-red
-green
-yellow
-blue
-magenta
-cyan
-white
-gray
-grey
-rainbow
-zebra
-america
-trap
-random
+- black
+- red
+- green
+- yellow
+- blue
+- magenta
+- cyan
+- white
+- gray
+- grey
+- rainbow
+- zebra
+- america
+- trap
+- random
 
 "bgColor" -> This will change the background color of the label. The background color options are as follows:
-bgBlack
-bgRed
-bgGreen
-bgYellow
-bgBlue
-bgMagenta
-bgCyan
-bgWhite
+- bgBlack
+- bgRed
+- bgGreen
+- bgYellow
+- bgBlue
+- bgMagenta
+- bgCyan
+- bgWhite
 
 "style" -> This will change the style of the label text. The style options are as follows:
-reset
-bold
-dim
-italic
-underline
-inverse
-hidden
-strikethrough
+- reset
+- bold
+- dim
+- italic
+- underline
+- inverse
+- hidden
+- strikethrough
 
 
 Example #1 Custom Configuration Usage:
