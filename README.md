@@ -4,7 +4,20 @@ Letlog
 Letlog is a flexible logging module that lets you simply log the variable itself while the module attaches a label of the variable name passed in to the console allowing for fast logging and identifying of variables in console output.
 <br><br>
 Letlog is also configurable, allowing you to change label size, color and formatting, making it easier to identify variables in messy console output.
+<br><br>
+Basic example:
+```js
+const letlog = require('letlog').log;
+const promote = "Check out my gaming channel https://www.youtube.com/channel/UCINwvRizJqUV34O8RFz6b8g"
+letlog(promote); //No need to write that tedious label in console.log to identify some output
 
+/*
+Console output:
+
+promote: Check out my gaming channel https://www.youtube.com/channel/UCINwvRizJqUV34O8RFz6b8g
+
+*/
+```
 
 
 

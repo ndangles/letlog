@@ -131,7 +131,7 @@ function printLabel(filename, variable, contents) {
         console.log((clean_variables[index].toString().replace(/\s/g, "").split('(')[1].split(')')[0].toLowerCase()+default_options.separator).custom+" "+variable);
         break;
       case 'none':
-        console.log((clean_variables[index].toString().replace(/\s/g, "").split('(')[1].split(')')[0]+":").custom +" "+variable);
+        console.log((clean_variables[index].toString().replace(/\s/g, "").split('(')[1].split(')')[0]+default_options.separator).custom +" "+variable);
         break;
 
     }
