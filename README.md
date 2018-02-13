@@ -1,6 +1,6 @@
 Letlog
 =================
-Tutorial/Walkthrough -> [https://youtu.be/t4JoeftH2Vk] (https://youtu.be/t4JoeftH2Vk)
+Tutorial/Walkthrough -> [https://youtu.be/t4JoeftH2Vk](https://youtu.be/t4JoeftH2Vk)
 
 Letlog is a flexible logging module that lets you simply log the variable itself while the module attaches a label of the variable name passed in to the console allowing for fast logging and identifying of variables in console output.
 <br><br>
