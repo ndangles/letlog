@@ -1,7 +1,7 @@
-const NodeCache = require( "node-cache" );
-const cache = new NodeCache();
 const fs = require('fs');
 const colors = require('colors');
+const appDir = __dirname.split('/node_modules')[0];
+const files = getFiles(appDir);
 const default_options = {
     separator: ":",
     case: "none",
@@ -11,51 +11,50 @@ const default_options = {
     style: "reset"
 }
 
+let cache = [];
+let fileCache = [];
 
-let currentIndex = 0;
+for(file of files){
+  let contents = fs.readFileSync(file);
+  fileCache.push({[file]: contents})
+}
 
 module.exports.log = (variable) => {
 
-  const filename = _getCallerFile();
+  const filename = getCallerFile();
+  const cacheData = findKey(filename, cache);
+  const contents = getFileData(filename);
 
-  cache.get(filename, ( err, values ) => {
-  if( !err ){
-    if(values == undefined){
-      cache.set(filename, {varNames:[{[variable]: 0}]})
-      printLabel(filename,variable)
-    }else{
-      fs.readFile(filename, (err, contents) => {
-        let variables = [];
-        let clean_variables = [];
-        let regex = new RegExp("^" + default_options.function + "\((.*)\)$", "gm");
 
-        variables = variables.concat(contents.toString().match(regex));
+  if(cacheData == undefined){
+    cache.push({[filename]: {varNames:[{[variable]: 0}]}});
+    printLabel(filename,variable,contents);
+  } else {
 
-        regex = new RegExp("\\s" + default_options.function + "\((.*)\)$", "gm");
+      let variables = [];
+      let clean_variables = [];
+      let regex = new RegExp("^" + default_options.function + "\((.*)\)$", "gm");
 
-        if(contents.toString().match(regex) != null){
-           variables = variables.concat(contents.toString().match(regex));
-        }
+      variables = variables.concat(contents.toString().match(regex));
 
-        for(varr of variables){
+      regex = new RegExp("\\s" + default_options.function + "\((.*)\)$", "gm");
+
+      if(contents.toString().match(regex) != null){
+         variables = variables.concat(contents.toString().match(regex));
+      }
+
+      for(varr of variables){
+        if(varr != null){
           if(varr.indexOf("require(") == -1){
             clean_variables.push(varr)
           }
         }
+      }
 
-        if(values.varNames.length < clean_variables.length){
-          values.varNames.push({[variable]: values.varNames.length})
-        }
-        cache.set(filename, values, (err, success) => {
+      cacheData.varNames.push({[variable]: cacheData.varNames.length})
+      printLabel(filename,variable,contents)
 
-          printLabel(filename,variable)
-
-        });
-      });
-    }
   }
-});
-
 
 
 }
@@ -88,20 +87,21 @@ module.exports.options = (options) => {
 
 }
 
-function printLabel(filename, variable) {
+function printLabel(filename, variable, contents) {
   let variables = [];
   let clean_variables = [];
   colors.setTheme({
     custom: [default_options.color, default_options.bgColor, default_options.style]
   });
 
-  fs.readFile(filename, (err, contents) => {
+    const cacheData = findKey(filename, cache);
+    let index;
 
-     let regex = new RegExp("^" + default_options.function + "\((.*)\)$", "gm");
+    let regex = new RegExp("^" + default_options.function + "\((.*)\)$", "gm");
 
-     variables.concat(contents.toString().match(regex));
+    variables.concat(contents.toString().match(regex));
 
-     regex = new RegExp("\\s" + default_options.function + "\((.*)\)$", "gm");
+    regex = new RegExp("\\s" + default_options.function + "\((.*)\)$", "gm");
 
     if(contents.toString().match(regex) != null){
         variables = variables.concat(contents.toString().match(regex));
@@ -113,36 +113,54 @@ function printLabel(filename, variable) {
       }
     }
 
-    cache.get( filename, ( err, cacheData ) => {
+    for(name of cacheData.varNames){
+      if(variable in name){
+        index = name[variable]
+        break;
+      }
 
-          let index;
-          for(name of cacheData.varNames){
+    }
 
-              if (variable in name){
-                index = name[variable];
-                break;
-              }
 
-          }
-          switch(default_options.case){
-            case 'upper':
-              console.log((clean_variables[index].toString().replace(/\s/g, "").split('(')[1].split(')')[0].toUpperCase()+default_options.separator).custom+" "+variable);
-              break;
-            case 'lower':
-              console.log((clean_variables[index].toString().replace(/\s/g, "").split('(')[1].split(')')[0].toLowerCase()+default_options.separator).custom+" "+variable);
-              break;
-            case 'none':
-              console.log((clean_variables[index].toString().replace(/\s/g, "").split('(')[1].split(')')[0]+":").custom +" "+variable);
-              break;
 
-          }
+    switch(default_options.case){
+      case 'upper':
+        console.log((clean_variables[index].toString().replace(/\s/g, "").split('(')[1].split(')')[0].toUpperCase()+default_options.separator).custom+" "+variable);
+        break;
+      case 'lower':
+        console.log((clean_variables[index].toString().replace(/\s/g, "").split('(')[1].split(')')[0].toLowerCase()+default_options.separator).custom+" "+variable);
+        break;
+      case 'none':
+        console.log((clean_variables[index].toString().replace(/\s/g, "").split('(')[1].split(')')[0]+":").custom +" "+variable);
+        break;
 
-    });
-  });
+    }
 
 }
 
-function _getCallerFile() {
+function findKey(keyName, arr){
+  for(a of arr){
+    if(a[keyName] != undefined){
+      return a[keyName];
+    }
+  }
+
+  return undefined;
+}
+
+function getFileData(filename){
+  for(f of fileCache){
+    if(f[filename] != undefined){
+      return f[filename]
+    }
+  }
+
+  return undefined;
+}
+
+
+
+function getCallerFile() {
     const originalFunc = Error.prepareStackTrace;
 
     let callerfile;
@@ -165,3 +183,31 @@ function _getCallerFile() {
 
     return callerfile;
 }
+
+function getFiles(dir) {
+
+
+    var results = [];
+
+    fs.readdirSync(dir).forEach((file) => {
+
+        file = dir+'/'+file;
+        var stat = fs.statSync(file);
+
+        if(!file.includes('node_modules')) {
+
+          if (stat && stat.isDirectory()) {
+              results = results.concat(getFiles(file))
+          } else {
+            if(file.endsWith('.js')){
+              results.push(file);
+            }
+
+          }
+
+        }
+    });
+
+    return results;
+
+};
