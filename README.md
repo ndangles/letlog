@@ -1,5 +1,6 @@
 Letlog
 =================
+Tutorial/Walkthrough -> [https://youtu.be/t4JoeftH2Vk] (https://youtu.be/t4JoeftH2Vk)
 
 Letlog is a flexible logging module that lets you simply log the variable itself while the module attaches a label of the variable name passed in to the console allowing for fast logging and identifying of variables in console output.
 <br><br>
@@ -178,10 +179,27 @@ These are the currently available functions listed below and examples on how to 
    */
    ```
 
+ How does this work?
+ ------
 
+ I rather not say. This was made in a very hacky way but the best way I could find at the time. If you are really interested about the inter-workings of this module, feel free to take a look at the [Github](https://github.com/ndangles/letlog) for a good laugh.
+
+ My research on accessing the name of the variable being passed to a function left me with limited results based on javascript's limitations. Accessing that information from a single file is quite simple. Throw the same functionality into a module trying to account for many different use cases and scenarios and it gets very tricky and that information can't be accessed as easily.
+
+ If you feel there is a better way to write this or you have any suggestions please let me know.
 
 
  Future
  ------
 
 Plan is to add features as I need them or see a use case for but also if there are people using this module besides me I will add features or changes upon requests.
+
+Support
+------
+
+If for some reason you are looking to support this project, I'd appreciate any follows/subscriptions to any of the follow social media:
+
+- [Gaming Youtube](https://www.youtube.com/channel/UCINwvRizJqUV34O8RFz6b8g)
+- [Tech Youtube](https://www.youtube.com/channel/UCWiek_kV6cTlbU2Frq-KzPA)
+- [Twitch](https://twitch.tv/ThaDangler)
+- [Twitter](https://twitter.com/Tha_Dangler)
