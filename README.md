@@ -179,6 +179,12 @@ These are the currently available functions listed below and examples on how to 
    */
    ```
 
+   Bugs
+  ------
+
+  Please let me know if you run into any bugs and I will try to fix them as soon as possible. This module is still new and was made in a hacky way so bugs may exist.
+
+
  How does this work?
  ------
 
