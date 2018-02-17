@@ -1,6 +1,6 @@
 {
   "name": "letlog",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "Log variables to console with label of variable name",
   "main": "index.js",
   "scripts": {
